@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <button class="browse-btn">Browse all</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" class="icon-link">
+        <i class="fa-solid fa-bell nav-icon bell-icon"></i>
+      </a>
+
+      <a href="cart.html" class="icon-link">
+        <i class="fa-solid fa-cart-shopping nav-icon cart-icon"></i>
+      </a>
+
+      <a href="login.html" class="login-link">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <div class="back-button-box">
+  <button class="back-btn" onclick="goToAllProducts()">
+    ← Back to products
+  </button>
+  </div>
+
+  <!-- ITEM CONTENT -->
+  <main class="item-page">
+
+    <!-- LEFT -->
+    <div class="item-left">
+      <div class="main-image"></div>
+
+      <div class="thumbnail-row">
+        <div class="arrow">◀</div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="thumb"></div>
+        <div class="arrow">▶</div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="item-right">
+      <h1 id="item-name">Product Name</h1>
+
+      <p class="subtitle" id="item-subtitle">Subtitle</p>
+
+      <div class="availability">
+        Item availability : 4/03/26 - 4/07/26
+      </div>
+
+      <div class="price-row">
+        <span class="price" id="item-price">$0</span>
+
+        <button class="btn dark" id="add-btn">add to cart</button>
+        <button class="btn">bid</button>
+        <button class="btn">negotiate</button>
+      </div>
+
+      <hr>
+
+      <h3>Product Description</h3>
+
+      <p id="item-description">
+        Description here
+      </p>
+    </div>
+
+  </main>
+
+  <!-- JS -->
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const id = params.get("id");
+  const name = params.get("name");
+  const price = params.get("price");
+  const subtitle = params.get("subtitle");
+  const description = params.get("description");
+
+  document.getElementById("item-name").textContent = name || "Unknown Product";
+  document.getElementById("item-price").textContent = price || "$0";
+  document.getElementById("item-subtitle").textContent = subtitle || "";
+  document.getElementById("item-description").textContent = description || "";
+
+  document.getElementById("add-btn").onclick = function () {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const product = {
+      id: id,
+      name: name,
+      price: price,
+      description: description,
+      quantity: 1
+    };
+
+    const existingProduct = cart.find(item => item.id === id);
+
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    } else {
+      cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    window.location.href = "cart.html";
+  };
+
+  function goToAllProducts() {
+  window.location.href = "all-products.html";
+  }
+</script>
+
+</body>
+</html>

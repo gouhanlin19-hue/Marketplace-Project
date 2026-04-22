@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
 
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <a href="browse.html" class="browse-btn-link">
+        <button class="browse-btn">Browse all</button>
+      </a>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" class="icon-link">
+        <i class="fa-solid fa-bell nav-icon bell-icon"></i>
+      </a>
+
+      <a href="cart.html" class="icon-link">
+        <i class="fa-solid fa-cart-shopping nav-icon cart-icon"></i>
+      </a>
+
+      <a href="login.html" class="login-link">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- ACCOUNT PAGE -->
+  <main class="account-page">
+
+    <!-- LEFT -->
+    <section class="account-left">
+      <div class="account-top">
+        <div class="account-avatar"></div>
+
+        <div class="account-user-info">
+          <div class="user-box" id="user-name">Name:</div>
+          <div class="user-box" id="user-email">Email:</div>
+        </div>
+      </div>
+
+      <div class="payment-card">
+        <div class="payment-title">Payment information</div>
+
+        <div class="payment-content">
+          <p id="user-address">Address :</p>
+          <p id="user-card">Card number :</p>
+          <button class="edit-btn" onclick="goToCheckout()">Edit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <section class="account-right">
+      <div class="orders-title">Past orders</div>
+
+      <div id="past-orders-container"></div>
+
+      <div class="orders-total-box">
+        <h3>Total paid: <span id="orders-total">$0</span></h3>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const pastOrders = JSON.parse(localStorage.getItem("pastOrders")) || [];
+    const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+
+    const container = document.getElementById("past-orders-container");
+    const totalElement = document.getElementById("orders-total");
+
+    // 用户信息
+    document.getElementById("user-name").textContent = "Name: " + (userInfo.name || "");
+    document.getElementById("user-email").textContent = "Email: " + (userInfo.email || "");
+    document.getElementById("user-address").textContent = "Address : " + (userInfo.address || "");
+
+    if (userInfo.card) {
+      const last4 = userInfo.card.slice(-4);
+      document.getElementById("user-card").textContent = "Card number : **** **** **** " + last4;
+    } else {
+      document.getElementById("user-card").textContent = "Card number :";
+    }
+
+    let totalPaid = 0;
+
+    if (pastOrders.length === 0) {
+      container.innerHTML = "<p>No past orders yet.</p>";
+      totalElement.textContent = "$0";
+    } else {
+      pastOrders.forEach(item => {
+        const numericPrice = parseFloat(item.price.replace("$", ""));
+        const quantity = item.quantity || 1;
+        const itemTotal = numericPrice * quantity;
+        totalPaid += itemTotal;
+
+        const orderItem = document.createElement("div");
+        orderItem.className = "order-item";
+
+        orderItem.innerHTML = `
+          <div class="order-image"></div>
+          <div class="order-info">
+            <h4>${item.name}</h4>
+            <p>${item.description}</p>
+            <p>Price: ${item.price}</p>
+            <p>Quantity: ${quantity}</p>
+          </div>
+        `;
+
+        container.appendChild(orderItem);
+      });
+
+      totalElement.textContent = "$" + totalPaid;
+    }
+
+    function goToCheckout() {
+      window.location.href = "checkout.html";
+    }
+  </script>
+
+</body>
+</html>

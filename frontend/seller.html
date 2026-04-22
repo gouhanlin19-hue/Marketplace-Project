@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Detail</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex;">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div style="color: white; font-weight: bold;">LOGO</div>
+    <div class="icon" onclick="goHome()">🏠</div>
+    <div class="icon" onclick="goSellers()">👥</div>
+    <div class="icon" onclick="goBrowse()">🛒</div>
+    <div class="icon">🔔</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="title">Welcome back <span id="welcome-name">Seller</span></div>
+
+    <div class="profile">
+      <div class="avatar"></div>
+
+      <div class="info-box">
+        <div class="info"><strong>Name:</strong> <span id="seller-name"></span></div>
+        <div class="info"><strong>Email:</strong> <span id="seller-email"></span></div>
+        <div class="info"><strong>Username:</strong> <span id="seller-username"></span></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat dark">
+        <p>Total Sales</p>
+        <h2 id="total-sales">$0</h2>
+      </div>
+
+      <div class="stat light">
+        <p>Total Products</p>
+        <h2 id="total-products">0</h2>
+      </div>
+
+      <div class="stat light">
+        <p>Seller ID</p>
+        <h2 id="seller-id-show">#0</h2>
+      </div>
+    </div>
+
+    <div class="table-box">
+      <h2 style="margin-bottom: 20px; color: var(--navy-dark);">Products</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th>ID Number</th>
+          </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+      </table>
+
+      <button class="add-btn" type="button">+ Add Product</button>
+      <div style="clear: both;"></div>
+    </div>
+  </div>
+
+  <script>
+    const sellers = [
+      { id: 1, username: "jack123", name: "Jack", email: "jack@gmail.com" },
+      { id: 2, username: "anna456", name: "Anna", email: "anna@gmail.com" },
+      { id: 3, username: "tom789", name: "Tom", email: "tom@gmail.com" },
+      { id: 4, username: "lily111", name: "Lily", email: "lily@gmail.com" }
+    ];
+
+    const products = [
+      { id: 101001, name: "Product 1", price: 200, type: "Buy Now", sellerId: 1 },
+      { id: 101002, name: "Product 2", price: 40, type: "Auction", sellerId: 1 },
+      { id: 101003, name: "Product 3", price: 20, type: "Negotiation", sellerId: 1 },
+      { id: 101004, name: "Product 4", price: 2, type: "Buy Now", sellerId: 1 },
+
+      { id: 102001, name: "Product 5", price: 120, type: "Auction", sellerId: 2 },
+      { id: 102002, name: "Product 6", price: 80, type: "Buy Now", sellerId: 2 },
+
+      { id: 103001, name: "Product 7", price: 300, type: "Negotiation", sellerId: 3 },
+      { id: 103002, name: "Product 8", price: 150, type: "Buy Now", sellerId: 3 },
+
+      { id: 104001, name: "Product 9", price: 500, type: "Auction", sellerId: 4 }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const sellerId = parseInt(params.get("id"), 10);
+
+    const seller = sellers.find((s) => s.id === sellerId);
+
+    if (!seller) {
+      document.querySelector(".main").innerHTML = `
+        <h1 style="color: var(--navy-dark);">Seller not found</h1>
+        <button class="btn" onclick="window.location.href='sellers.html'">Back to Seller List</button>
+      `;
+    } else {
+      const sellerProducts = products.filter((product) => product.sellerId === sellerId);
+      const totalSales = sellerProducts.reduce((sum, product) => sum + product.price, 0);
+
+      document.getElementById("welcome-name").textContent = seller.name;
+      document.getElementById("seller-name").textContent = seller.name;
+      document.getElementById("seller-email").textContent = seller.email;
+      document.getElementById("seller-username").textContent = seller.username;
+      document.getElementById("total-sales").textContent = "$" + totalSales;
+      document.getElementById("total-products").textContent = sellerProducts.length;
+      document.getElementById("seller-id-show").textContent = "#" + seller.id;
+
+      const productList = document.getElementById("product-list");
+
+      sellerProducts.forEach((product) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td><input type="checkbox"></td>
+          <td><div class="product-img"></div></td>
+          <td>${product.name}</td>
+          <td>$${product.price}</td>
+          <td>${product.type}</td>
+          <td>#${product.id}</td>
+        `;
+
+        productList.appendChild(row);
+      });
+    }
+
+    function goHome() {
+      window.location.href = "index1.html";
+    }
+
+    function goSellers() {
+      window.location.href = "sellers.html";
+    }
+
+    function goBrowse() {
+      window.location.href = "browse.html";
+    }
+  </script>
+
+</body>
+</html>

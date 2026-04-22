@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+    <div class="back-button-box login-back">
+        <button class="back-btn" onclick="goBack()">← Back</button>
+    </div>
+
+    <div class="signup-container">
+    <div class="avatar"></div>
+
+    <input type="text" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <input type="password" placeholder="Confirm Password">
+
+    <a href="#" class="forgot">Forgot Password</a>
+
+    <button class="signup-btn">Sign up</button>
+
+    <p class="login-link-text">
+      Do you have an account?
+      <a href="login.html">Log in</a>
+    </p>
+  </div>
+
+  <script>
+    document.querySelector(".signup-btn").onclick = function () {
+      alert("Account created!");
+      window.location.href = "login.html";
+    };
+  </script>
+
+</body>
+</html>

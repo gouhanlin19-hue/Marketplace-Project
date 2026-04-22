@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Products</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <a href="browse.html">
+        <button class="browse-btn">Browse all</button>
+      </a>
+    </div>
+
+    <div class="search-bar">
+      <input type="text">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <i class="fa-solid fa-bell nav-icon"></i>
+
+      <a href="cart.html">
+        <i class="fa-solid fa-cart-shopping nav-icon"></i>
+      </a>
+
+      <a href="login.html">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- TITLE -->
+  <section class="browse-section">
+    <div class="browse-title-row">
+      <h2>All Products</h2>
+      <p>Browse everything</p>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="browse-grid" id="product-grid"></div>
+  </section>
+
+  <script>
+    const products = [];
+
+    // 自动生成 20 个商品
+    for (let i = 1; i <= 20; i++) {
+      products.push({
+        id: "product" + i,
+        name: "Product " + i,
+        price: "$" + (10 + i * 3),
+        subtitle: "Category " + ((i % 4) + 1),
+        description: "This is the description for Product " + i + "."
+      });
+    }
+
+    const container = document.getElementById("product-grid");
+
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "browse-card";
+
+      card.innerHTML = `
+        <div class="browse-card-image"></div>
+        <h3>${product.name}</h3>
+        <p>${product.subtitle}</p>
+        <strong>${product.price}</strong>
+      `;
+
+      card.onclick = function () {
+        const url =
+          "item.html?id=" + product.id +
+          "&name=" + encodeURIComponent(product.name) +
+          "&price=" + encodeURIComponent(product.price) +
+          "&subtitle=" + encodeURIComponent(product.subtitle) +
+          "&description=" + encodeURIComponent(product.description);
+
+        window.location.href = url;
+      };
+
+      container.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
