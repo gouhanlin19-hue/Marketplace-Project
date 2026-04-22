@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex;">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div style="color: white; font-weight: bold;">LOGO</div>
+    <div class="icon" onclick="goHome()">🏠</div>
+    <div class="icon" onclick="goSellers()">👥</div>
+    <div class="icon" onclick="goBrowse()">🛒</div>
+    <div class="icon">🔔</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="search-bar" style="margin-bottom: 20px; max-width: 400px;">
+      <input type="text" id="sellerSearch" placeholder="Search seller by name..." onkeyup="filterSellers()">
+    </div>
+
+    <div class="seller-section">
+      <div class="section-header">
+        <div class="section-title">Seller List</div>
+        <button class="add-btn" type="button">+ Add Seller</button>
+      </div>
+
+      <div class="seller-grid" id="seller-list"></div>
+    </div>
+
+    <div class="table-box">
+      <h2 style="margin-bottom: 20px; color: var(--navy-dark);">Products</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th>ID Number</th>
+          </tr>
+        </thead>
+        <tbody id="product-list"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    const sellers = [
+      { id: 1, username: "jack123", name: "Jack", email: "jack@gmail.com" },
+      { id: 2, username: "anna456", name: "Anna", email: "anna@gmail.com" },
+      { id: 3, username: "tom789", name: "Tom", email: "tom@gmail.com" },
+      { id: 4, username: "lily111", name: "Lily", email: "lily@gmail.com" }
+    ];
+
+    const products = [
+      { id: 101001, name: "MacBook", price: 1000, type: "Buy Now" },
+      { id: 101002, name: "iPhone", price: 600, type: "Auction" },
+      { id: 101003, name: "iPad", price: 750, type: "Negotiation" },
+      { id: 101004, name: "AirPods", price: 100, type: "Buy Now" }
+    ];
+
+    const sellerList = document.getElementById("seller-list");
+    const productList = document.getElementById("product-list");
+
+    function renderSellers(data) {
+      sellerList.innerHTML = "";
+
+      data.forEach((seller) => {
+        const card = document.createElement("div");
+        card.className = "seller-card";
+
+        card.innerHTML = `
+          <div class="avatar"></div>
+          <div>
+            <p><strong>Username:</strong> ${seller.username}</p>
+            <p><strong>Name:</strong> ${seller.name}</p>
+            <p><strong>Email:</strong> ${seller.email}</p>
+          </div>
+        `;
+
+        card.addEventListener("click", function () {
+          window.location.href = "seller.html?id=" + seller.id;
+        });
+
+        sellerList.appendChild(card);
+      });
+    }
+
+    function renderProducts() {
+      productList.innerHTML = "";
+
+      products.forEach((product) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td><div class="product-img"></div></td>
+          <td>${product.name}</td>
+          <td>$${product.price}</td>
+          <td>${product.type}</td>
+          <td>#${product.id}</td>
+        `;
+
+        productList.appendChild(row);
+      });
+    }
+
+    function filterSellers() {
+      const keyword = document.getElementById("sellerSearch").value.toLowerCase();
+
+      const filtered = sellers.filter((seller) => {
+        return (
+          seller.name.toLowerCase().includes(keyword) ||
+          seller.username.toLowerCase().includes(keyword) ||
+          seller.email.toLowerCase().includes(keyword)
+        );
+      });
+
+      renderSellers(filtered);
+    }
+
+    function goHome() {
+      window.location.href = "index1.html";
+    }
+
+    function goSellers() {
+      window.location.href = "sellers.html";
+    }
+
+    function goBrowse() {
+      window.location.href = "browse.html";
+    }
+
+    renderSellers(sellers);
+    renderProducts();
+  </script>
+
+</body>
+</html>

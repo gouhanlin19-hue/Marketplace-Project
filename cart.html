@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <button class="browse-btn">Browse all</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" class="icon-link">
+        <i class="fa-solid fa-bell nav-icon bell-icon"></i>
+      </a>
+
+      <a href="cart.html" class="icon-link">
+        <i class="fa-solid fa-cart-shopping nav-icon cart-icon"></i>
+      </a>
+
+      <a href="login.html" class="login-link">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- CART -->
+  <main class="cart-page">
+
+    <!-- LEFT -->
+    <div class="cart-left-area">
+      <h1>Your Cart</h1>
+
+      <div id="cart-items-container"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="cart-summary">
+      <div class="summary-header">Order summary</div>
+
+      <div class="summary-content">
+        <p><strong>Order Subtotal:</strong> <span id="subtotal-price">$0</span></p>
+        <hr>
+        <p><strong>Shipping total :</strong> <span id="shipping-price">$20</span></p>
+        <p><strong>Tax :</strong> <span id="tax-price">$40</span></p>
+        <hr class="bottom-line">
+        <p class="total-row"><strong>Total :</strong> <span id="total-price">$0</span></p>
+
+        <button class="checkout-btn" id="checkout-btn">Check out</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-items-container");
+
+    let subtotal = 0;
+
+    function renderCart() {
+      container.innerHTML = "";
+      subtotal = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty.</p>";
+        document.getElementById("subtotal-price").textContent = "$0";
+        document.getElementById("shipping-price").textContent = "$0";
+        document.getElementById("tax-price").textContent = "$0";
+        document.getElementById("total-price").textContent = "$0";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const numericPrice = parseFloat(item.price.replace("$", ""));
+        const itemTotal = numericPrice * item.quantity;
+        subtotal += itemTotal;
+
+        const cartItem = document.createElement("div");
+        cartItem.className = "cart-item";
+
+        cartItem.innerHTML = `
+          <div class="item-image"></div>
+
+          <div class="item-middle">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <strong>${item.price}</strong>
+          </div>
+
+          <div class="item-right">
+            <div class="qty-row">
+              <span>Qty:</span>
+              <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+            </div>
+            <a href="#" onclick="removeItem(${index}); return false;">Remove</a>
+          </div>
+
+          <button class="save-btn">Save for later</button>
+        `;
+
+        container.appendChild(cartItem);
+      });
+
+      const shipping = cart.length > 0 ? 20 : 0;
+      const tax = cart.length > 0 ? 40 : 0;
+      const total = subtotal + shipping + tax;
+
+      document.getElementById("subtotal-price").textContent = "$" + subtotal;
+      document.getElementById("shipping-price").textContent = "$" + shipping;
+      document.getElementById("tax-price").textContent = "$" + tax;
+      document.getElementById("total-price").textContent = "$" + total;
+    }
+
+    function updateQuantity(index, newQuantity) {
+      const quantity = parseInt(newQuantity);
+
+      if (quantity < 1 || isNaN(quantity)) return;
+
+      cart[index].quantity = quantity;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    document.getElementById("checkout-btn").onclick = function () {
+      alert("Checkout complete!");
+      localStorage.removeItem("cart");
+      renderCart();
+    };
+
+    renderCart();
+  </script>
+
+</body>
+</html>

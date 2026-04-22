@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <a href="browse.html" class="browse-btn-link">
+        <button class="browse-btn">Browse all</button>
+      </a>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" class="icon-link">
+        <i class="fa-solid fa-bell nav-icon bell-icon"></i>
+      </a>
+
+      <a href="cart.html" class="icon-link">
+        <i class="fa-solid fa-cart-shopping nav-icon cart-icon"></i>
+      </a>
+
+      <a href="login.html" class="login-link">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- CHECKOUT FORM -->
+  <main class="checkout-page">
+    <div class="checkout-form-container">
+      <h1>Checkout</h1>
+
+      <input type="text" id="checkout-name" placeholder="Full Name">
+      <input type="email" id="checkout-email" placeholder="Email">
+      <input type="text" id="checkout-address" placeholder="Address">
+      <input type="text" id="checkout-card" placeholder="Card Number">
+
+      <button id="confirm-order-btn">Confirm Order</button>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("confirm-order-btn").onclick = function () {
+      const name = document.getElementById("checkout-name").value;
+      const email = document.getElementById("checkout-email").value;
+      const address = document.getElementById("checkout-address").value;
+      const card = document.getElementById("checkout-card").value;
+
+      if (!name || !email || !address || !card) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      const userInfo = {
+        name: name,
+        email: email,
+        address: address,
+        card: card
+      };
+
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      localStorage.setItem("pastOrders", JSON.stringify(cart));
+      localStorage.removeItem("cart");
+
+      window.location.href = "account.html";
+    };
+  </script>
+
+</body>
+</html>

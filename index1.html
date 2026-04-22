@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omnes MarketPlace</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-box">LOGO</div>
+
+      <a href="index1.html" class="icon-link">
+        <i class="fa-solid fa-house nav-icon home-icon"></i>
+      </a>
+
+      <button class="browse-btn">Browse all</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    </div>
+
+    <div class="nav-right">
+      <a href="#" class="icon-link">
+        <i class="fa-solid fa-bell nav-icon bell-icon"></i>
+      </a>
+
+      <a href="cart.html" class="icon-link">
+        <i class="fa-solid fa-cart-shopping nav-icon cart-icon"></i>
+      </a>
+
+      <a href="login.html" class="login-link">
+        <div class="login-box">login /<br>sign in</div>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-logo">logo</div>
+
+    <div class="hero-text">
+      <h1>Our Story</h1>
+      <h3>Welcome to Omnes MarketPlace</h3>
+      <p>
+        Omnes MarketPlace is an online shopping platform for the Omnes Education community.
+      </p>
+      <p>
+        Browse electronic products, discover great deals, and enjoy a simple shopping experience.
+      </p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- PRODUCT SECTION -->
+  <section class="selection">
+    <h2>Selection of the products</h2>
+
+    <div class="product-list">
+
+      <div class="card" onclick="goToItem(
+        'macbook',
+        'MacBook',
+        '$1000',
+        'Sleek and powerful, MacBook combines industry-leading performance with a stunning display, making it the ultimate tool for work and creativity.',
+        'MacBook is designed for students and professionals who need power, speed, and reliability for daily work, study, and creative projects.'
+      )">
+        <div class="card-image"></div>
+        <h3>MacBook</h3>
+        <p>
+          Sleek and powerful, MacBook combines industry-leading performance with a stunning display, making it the ultimate tool for work and creativity.
+        </p>
+        <strong>$1000</strong>
+      </div>
+
+      <div class="card" onclick="goToItem(
+        'iphone',
+        'Iphone',
+        '$600',
+        'More than just a phone, iPhone delivers a pro-grade camera and lightning-fast performance within an elegant, highly intuitive mobile experience.',
+        'iPhone offers a smooth and premium mobile experience with excellent camera quality, fast performance, and a simple, modern design.'
+      )">
+        <div class="card-image"></div>
+        <h3>Iphone</h3>
+        <p>
+          More than just a phone, iPhone delivers a pro-grade camera and lightning-fast performance within an elegant, highly intuitive mobile experience.
+        </p>
+        <strong>$600</strong>
+      </div>
+
+      <div class="card" onclick="goToItem(
+        'ipad',
+        'Ipad',
+        '$750',
+        'iPad transforms from a digital canvas to a portable workstation, offering a versatile touch-first experience for creativity and productivity anywhere.',
+        'iPad is perfect for note-taking, drawing, studying, and entertainment, giving users flexibility in a lightweight and portable format.'
+      )">
+        <div class="card-image"></div>
+        <h3>Ipad</h3>
+        <p>
+          iPad transforms from a digital canvas to a portable workstation, offering a versatile touch-first experience for creativity and productivity anywhere.
+        </p>
+        <strong>$750</strong>
+      </div>
+
+      <div class="card" onclick="goToItem(
+        'airpods',
+        'Airpods',
+        '$100',
+        'Experience wireless magic with AirPods, featuring high-fidelity sound and seamless switching between devices for an effortless, immersive listening experience daily.',
+        'AirPods provide clear sound, wireless convenience, and easy connection across Apple devices, making them ideal for everyday use.'
+      )">
+        <div class="card-image"></div>
+        <h3>Airpods</h3>
+        <p>
+          Experience wireless magic with AirPods, featuring high-fidelity sound and seamless switching between devices for an effortless, immersive listening experience daily.
+        </p>
+        <strong>$100</strong>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOTTOM INFO -->
+  <section class="bottom-info">
+    <div class="contact-box">
+      <h2>Contact Information</h2>
+      <p><strong>Email:</strong> omnesmarketplace@gmail.com</p>
+      <p><strong>Phone:</strong> +33 6 12 34 56 78</p>
+      <p><strong>Address:</strong> 10 Rue Sextius Michel, Paris, France</p>
+      <p><strong>Opening Hours:</strong> Mon - Fri</p>
+    </div>
+
+    <div class="vertical-line"></div>
+
+    <div class="map-box">
+      <h2>Google Map</h2>
+      <iframe
+        src="https://www.google.com/maps?q=Paris&output=embed"
+        width="100%"
+        height="250"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <footer class="footer"></footer>
+
+  <script>
+    function goToItem(id, name, price, subtitle, description) {
+      const url =
+        "item.html?id=" + encodeURIComponent(id) +
+        "&name=" + encodeURIComponent(name) +
+        "&price=" + encodeURIComponent(price) +
+        "&subtitle=" + encodeURIComponent(subtitle) +
+        "&description=" + encodeURIComponent(description);
+
+      window.location.href = url;
+    }
+  </script>
+
+</body>
+</html>
